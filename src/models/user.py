@@ -1,5 +1,9 @@
 
 from pydantic import BaseModel
+
+from src.models.account import Account
+
+
 class UserInDB(BaseModel):
     id: int
     full_name: str
@@ -9,7 +13,14 @@ class UserInDB(BaseModel):
 class BaseUser(BaseModel):
     email: str
     password: str
+
 class AuthenticatedUser(BaseUser): ...
+
 class UserCreate(BaseUser):
     full_name: str
 
+class UserUpdate(BaseUser):
+    full_name: str
+
+class UserList(UserInDB):
+    accounts: list[Account]

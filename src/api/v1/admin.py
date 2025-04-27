@@ -10,7 +10,7 @@ from src.db.postgres.amount_repository import (AmountRepository,
                                                get_amount_repository)
 from src.db.postgres.connection import get_session
 from src.db.postgres.user_repository import UserRepository, get_user_repository
-from src.models.user import AuthenticatedUser, UserCreate, UserInDB
+from src.models.user import AuthenticatedUser, UserCreate, UserInDB, UserList, UserUpdate
 
 router = APIRouter()
 
@@ -60,7 +60,7 @@ async def get_info(
 
 
 @router.post(
-    "/create/user",
+    "/user/create",
     status_code=status.HTTP_201_CREATED,
     description="Create user",
 )
@@ -68,7 +68,7 @@ async def create_user(
     user: UserCreate,
     session: AsyncSession = Depends(get_session),
     user_repository: UserRepository = Depends(get_user_repository),
-) -> UserInDB | None:
+) -> None:
     try:
         await user_repository.create(user=user, session=session)
 
@@ -76,4 +76,62 @@ async def create_user(
         logger.error(f"msg=User create error: {exc}")
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail=f"{exc}"
+        ) from exc
+
+@router.put(
+    "/user/update",
+    status_code=status.HTTP_200_OK,
+    description="Update user",
+)
+async def update_user(
+    user: UserUpdate,
+    email: str = Query(),
+    session: AsyncSession = Depends(get_session),
+    user_repository: UserRepository = Depends(get_user_repository),
+) -> None:
+    try:
+        await user_repository.update(user=user, email=email, session=session)
+
+    except Exception as exc:
+        logger.error(f"msg=User update error: {exc}")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail=f"{exc}"
+        ) from exc
+
+@router.delete(
+    "/user/delete",
+    status_code=status.HTTP_200_OK,
+    description="Delete user",
+)
+async def delete_user(
+    email: str = Query(),
+    session: AsyncSession = Depends(get_session),
+    user_repository: UserRepository = Depends(get_user_repository),
+) -> None:
+    try:
+        await user_repository.delete(email=email, session=session)
+
+    except Exception as exc:
+        logger.error(f"msg=User delete error: {exc}")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail=f"{exc}"
+        ) from exc
+
+@router.get(
+    "/user/list",
+    status_code=status.HTTP_200_OK,
+    description="Get users",
+    response_model=list[UserList]
+)
+async def get_list(
+    session: AsyncSession = Depends(get_session),
+    user_repository: UserRepository = Depends(get_user_repository),
+) -> list[UserList]:
+    try:
+        return await user_repository.get_user_list(session)
+
+    except Exception as exc:
+        logger.error(f"msg=Get users error: {exc}")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=f"{exc}"
         ) from exc

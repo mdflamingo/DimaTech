@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column, String
+from sqlalchemy import BigInteger, Column, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import declarative_base
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -10,13 +10,7 @@ Base = declarative_base()
 
 class User(Base):
     __tablename__ = "users"
-    id = Column(
-        UUID(as_uuid=True),
-        primary_key=True,
-        default=uuid.uuid4,
-        unique=True,
-        nullable=False,
-    )
+    id = Column(BigInteger, primary_key=True, autoincrement=True)
     email = Column(String(255), unique=True, nullable=False)
     password = Column(String(255), nullable=False)
     full_name = Column(String(50), nullable=False)
@@ -57,3 +51,7 @@ class Admin(Base):
 
     def __repr__(self) -> str:
         return f"<User {self.email}>"
+
+password = "your_password"
+hashed_password = generate_password_hash(password)
+print(hashed_password)

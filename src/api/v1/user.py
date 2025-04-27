@@ -17,18 +17,17 @@ router = APIRouter()
     "/auth",
     status_code=status.HTTP_200_OK,
     description="User authorization",
-    response_model=AuthenticatedUser
 )
 async def auth(
     user: AuthenticatedUser,
     session: AsyncSession = Depends(get_session),
     user_service: UserService = Depends(get_user_service),
-) -> AuthenticatedUser:
+) -> str:
     try:
         authenticated_user = await user_service.auth(user=user, session=session)
         if not authenticated_user:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
-        return authenticated_user
+        return authenticated_user.email
     except Exception as exc:
         logger.error(f"msg=User authorization error: {exc}")
         raise HTTPException(

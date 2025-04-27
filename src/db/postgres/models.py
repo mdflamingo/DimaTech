@@ -15,6 +15,7 @@ class User(Base):
 
     accounts = relationship("Account", back_populates="user")
 
+
     def __init__(self, email: str, password: str, full_name: str) -> None:
         self.email = email
         self.password = generate_password_hash(password)
@@ -24,11 +25,13 @@ class User(Base):
         return check_password_hash(self.password, password)
 
 
-class Admin(User):
+class Admin(Base):
     __tablename__ = "admins"
 
-    id = Column(BigInteger, ForeignKey('users.id'), primary_key=True)
-
+    id = Column(BigInteger, primary_key=True, autoincrement=True)
+    email = Column(String(255), unique=True, nullable=False)
+    password = Column(String(255), nullable=False)
+    full_name = Column(String(50), nullable=False)
 
 class Account(Base):
     __tablename__ = "accounts"

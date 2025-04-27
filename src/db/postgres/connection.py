@@ -3,11 +3,10 @@ from sqlalchemy.ext.asyncio import (
     async_sessionmaker,
     create_async_engine,
 )
-from sqlalchemy.orm import declarative_base
 
 from ...core.settings import settings
+from .models import Base
 
-Base = declarative_base()
 metadata = Base.metadata
 dsn = (
     f"postgresql+asyncpg://"

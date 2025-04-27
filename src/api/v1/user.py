@@ -26,13 +26,16 @@ async def auth(
     try:
         authenticated_user = await user_service.auth(user=user, session=session)
         if not authenticated_user:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials"
+            )
         return authenticated_user.email
     except Exception as exc:
         logger.error(f"msg=User authorization error: {exc}")
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"{exc}"
         ) from exc
+
 
 @router.get(
     "/info",
@@ -47,7 +50,9 @@ async def get_info(
     try:
         user = await user_repository.get_by_email(email=email, session=session)
         if user is None:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User  not found")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="User  not found"
+            )
         return UserInDB(**user.__dict__)
 
     except Exception as exc:
@@ -56,11 +61,12 @@ async def get_info(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"{exc}"
         ) from exc
 
+
 @router.get(
     "/account/list",
     status_code=status.HTTP_200_OK,
     description="Get account list",
-    response_model=list[Account]
+    response_model=list[Account],
 )
 async def get_account_list(
     email: str = Query(),
@@ -75,6 +81,7 @@ async def get_account_list(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"{exc}"
         ) from exc
+
 
 @router.get(
     "/amount/list",

@@ -2,15 +2,16 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from loguru import logger
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.db.postgres.account_repository import (AccountRepository,
-                                                get_account_repository)
-from src.db.postgres.admin_repository import (AdminRepository,
-                                              get_admin_repository)
-from src.db.postgres.amount_repository import (AmountRepository,
-                                               get_amount_repository)
+from src.db.postgres.admin_repository import AdminRepository, get_admin_repository
 from src.db.postgres.connection import get_session
 from src.db.postgres.user_repository import UserRepository, get_user_repository
-from src.models.user import AuthenticatedUser, UserCreate, UserInDB, UserList, UserUpdate
+from src.models.user import (
+    AuthenticatedUser,
+    UserCreate,
+    UserInDB,
+    UserList,
+    UserUpdate,
+)
 
 router = APIRouter()
 
@@ -26,15 +27,20 @@ async def auth(
     admin_repository: AdminRepository = Depends(get_admin_repository),
 ) -> str:
     try:
-        authenticated_admin = await admin_repository.get_by_email(email=user.email, session=session)
+        authenticated_admin = await admin_repository.get_by_email(
+            email=user.email, session=session
+        )
         if not authenticated_admin:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials"
+            )
         return authenticated_admin.email
     except Exception as exc:
         logger.error(f"msg=User authorization error: {exc}")
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"{exc}"
         ) from exc
+
 
 @router.get(
     "/info",
@@ -49,7 +55,9 @@ async def get_info(
     try:
         user = await admin_repository.get_by_email(email=email, session=session)
         if user is None:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Admin not found")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Admin not found"
+            )
         return UserInDB(**user.__dict__)
 
     except Exception as exc:
@@ -78,6 +86,7 @@ async def create_user(
             status_code=status.HTTP_400_BAD_REQUEST, detail=f"{exc}"
         ) from exc
 
+
 @router.put(
     "/user/update",
     status_code=status.HTTP_200_OK,
@@ -98,6 +107,7 @@ async def update_user(
             status_code=status.HTTP_400_BAD_REQUEST, detail=f"{exc}"
         ) from exc
 
+
 @router.delete(
     "/user/delete",
     status_code=status.HTTP_200_OK,
@@ -117,11 +127,12 @@ async def delete_user(
             status_code=status.HTTP_400_BAD_REQUEST, detail=f"{exc}"
         ) from exc
 
+
 @router.get(
     "/user/list",
     status_code=status.HTTP_200_OK,
     description="Get users",
-    response_model=list[UserList]
+    response_model=list[UserList],
 )
 async def get_list(
     session: AsyncSession = Depends(get_session),

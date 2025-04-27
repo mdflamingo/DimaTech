@@ -20,16 +20,22 @@ class AmountRepository:
         user = await self.user_repository.get_by_email(email=email, session=session)
         try:
             query = (
-                    select(self.db_model)
-                    .join(self.db_account_model)
-                    .where(self.db_account_model.user_id == user.id)
-                )
+                select(self.db_model)
+                .join(self.db_account_model)
+                .where(self.db_account_model.user_id == user.id)
+            )
             result = await session.execute(query)
             amounts = result.scalars().all()
-            return [Amount(amount=amount.amount, account_id=amount.account_id) for amount in amounts]
+            return [
+                Amount(amount=amount.amount, account_id=amount.account_id)
+                for amount in amounts
+            ]
         except Exception as error:
             await session.rollback()
             raise error
 
-def get_amount_repository(user_repository: UserRepository = Depends(get_user_repository)) -> AmountRepository:
+
+def get_amount_repository(
+    user_repository: UserRepository = Depends(get_user_repository),
+) -> AmountRepository:
     return AmountRepository(user_repository=user_repository)

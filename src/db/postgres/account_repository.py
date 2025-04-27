@@ -22,5 +22,6 @@ class AccountRepository:
             await session.rollback()
             raise error
 
+
 def get_account_repository() -> AccountRepository:
     return AccountRepository()

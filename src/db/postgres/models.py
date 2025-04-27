@@ -15,7 +15,6 @@ class User(Base):
 
     accounts = relationship("Account", back_populates="user")
 
-
     def __init__(self, email: str, password: str, full_name: str) -> None:
         self.email = email
         self.password = generate_password_hash(password)
@@ -33,12 +32,13 @@ class Admin(Base):
     password = Column(String(255), nullable=False)
     full_name = Column(String(50), nullable=False)
 
+
 class Account(Base):
     __tablename__ = "accounts"
 
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     balance = Column(Float, default=0.0)
-    user_id = Column(BigInteger, ForeignKey('users.id'))
+    user_id = Column(BigInteger, ForeignKey("users.id"))
 
     user = relationship("User", back_populates="accounts")
     payments = relationship("Payment", back_populates="account")
@@ -49,10 +49,9 @@ class Payment(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     amount = Column(Float, nullable=False)
-    account_id = Column(Integer, ForeignKey('accounts.id'))
+    account_id = Column(Integer, ForeignKey("accounts.id"))
 
     account = relationship("Account", back_populates="payments")
-
 
 
 password = "your_password"

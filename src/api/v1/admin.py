@@ -11,9 +11,7 @@ router = APIRouter()
     status_code=status.HTTP_200_OK,
     description="Admin authorization",
 )
-async def auth(
-session: AsyncSession = Depends(get_session)
-):
+async def auth(session: AsyncSession = Depends(get_session)):
     # try:
     #     await signup(user_create.model_dump(), session)
     # except Exception as exc:

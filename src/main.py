@@ -3,8 +3,8 @@ from contextlib import asynccontextmanager
 import uvicorn
 from fastapi import FastAPI
 
-from .api.v1.routes import router
-from .db.postgres.connection import create_database
+from src.api.v1.routes import router
+from src.db.postgres.connection import create_database
 
 
 @asynccontextmanager

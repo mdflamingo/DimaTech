@@ -50,10 +50,6 @@ class Payment(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     amount = Column(Float, nullable=False)
     account_id = Column(Integer, ForeignKey("accounts.id"))
+    transaction_id = Column(String, nullable=False)
 
     account = relationship("Account", back_populates="payments")
-
-
-password = "your_password"
-hashed_password = generate_password_hash(password)
-print(hashed_password)

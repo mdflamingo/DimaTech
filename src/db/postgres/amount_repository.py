@@ -2,10 +2,10 @@ from fastapi import Depends
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.db.postgres.user_repository import UserRepository, get_user_repository
-from src.models.amount import Amount
+from db.postgres.user_repository import UserRepository, get_user_repository
+from models.amount import Amount
 
-from .models import Account, Payment, User
+from db.postgres.models import Account, Payment, User
 
 
 class AmountRepository:

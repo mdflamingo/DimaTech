@@ -1,9 +1,9 @@
 from sqlalchemy import select, insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.models.paymant import Paymant as payment_request
+from models.paymant import Paymant as payment_request
 
-from .models import Payment
+from db.postgres.models import Payment
 
 
 class PaymentRepository:

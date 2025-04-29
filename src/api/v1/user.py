@@ -1,14 +1,14 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from loguru import logger
 from sqlalchemy.ext.asyncio import AsyncSession
-from src.db.postgres.account_repository import AccountRepository, get_account_repository
-from src.db.postgres.amount_repository import AmountRepository, get_amount_repository
+from db.postgres.account_repository import AccountRepository, get_account_repository
+from db.postgres.amount_repository import AmountRepository, get_amount_repository
 
-from src.db.postgres.connection import get_session
-from src.db.postgres.user_repository import UserRepository, get_user_repository
-from src.models.account import Account
-from src.models.user import AuthenticatedUser, UserInDB
-from src.services.user_service import UserService, get_user_service
+from db.postgres.connection import get_session
+from db.postgres.user_repository import UserRepository, get_user_repository
+from models.account import Account
+from models.user import AuthenticatedUser, UserInDB
+from services.user_service import UserService, get_user_service
 
 router = APIRouter()
 

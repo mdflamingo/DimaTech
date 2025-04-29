@@ -2,10 +2,10 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from loguru import logger
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.db.postgres.admin_repository import AdminRepository, get_admin_repository
-from src.db.postgres.connection import get_session
-from src.db.postgres.user_repository import UserRepository, get_user_repository
-from src.models.user import (
+from db.postgres.admin_repository import AdminRepository, get_admin_repository
+from db.postgres.connection import get_session
+from db.postgres.user_repository import UserRepository, get_user_repository
+from models.user import (
     AuthenticatedUser,
     UserCreate,
     UserInDB,

@@ -1,7 +1,7 @@
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from .models import Admin
+from db.postgres.models import Admin
 
 
 class AdminRepository:

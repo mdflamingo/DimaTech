@@ -4,11 +4,11 @@ from dataclasses import dataclass
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.core.settings import settings
-from src.db.postgres.account_repository import AccountRepository, get_account_repository
-from src.db.postgres.paymant_repository import PaymentRepository, get_paymant_repository
-from src.db.postgres.user_repository import UserRepository, get_user_repository
-from src.models.paymant import Paymant
+from core.settings import settings
+from db.postgres.account_repository import AccountRepository, get_account_repository
+from db.postgres.paymant_repository import PaymentRepository, get_paymant_repository
+from db.postgres.user_repository import UserRepository, get_user_repository
+from models.paymant import Paymant
 
 
 @dataclass

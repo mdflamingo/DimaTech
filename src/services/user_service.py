@@ -2,8 +2,8 @@ from dataclasses import dataclass
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.db.postgres.user_repository import UserRepository, get_user_repository
-from src.models.user import AuthenticatedUser
+from db.postgres.user_repository import UserRepository, get_user_repository
+from models.user import AuthenticatedUser
 
 
 @dataclass

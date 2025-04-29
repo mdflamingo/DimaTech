@@ -4,8 +4,8 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine,
 )
 
-from src.core.settings import settings
-from src.db.postgres.models import Base
+from core.settings import settings
+from db.postgres.models import Base
 
 metadata = Base.metadata
 dsn = (

@@ -15,17 +15,15 @@ services:
     ports:
       - 5432:5432
 
-  # app:
-  #   container_name: app
-  #   build:
-  #     context: .
-  #     dockerfile: ./dockerization/Dockerfile
-  #   env_file:
-  #     - src/.env
-  #   restart: unless-stopped
-  #   ports:
-  #     - 8000:8000
-  #   expose:
-  #     - "8000"
-  #   depends_on:
-  #     - postgres
+  app:
+     container_name: app
+     build: .
+     env_file:
+       - .env
+     restart: unless-stopped
+     ports:
+       - 8000:8000
+     expose:
+       - "8000"
+     depends_on:
+       - postgres

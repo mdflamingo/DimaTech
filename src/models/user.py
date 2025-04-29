@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from src.models.account import Account
+from models.account import Account
 
 
 class UserInDB(BaseModel):

@@ -3,10 +3,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 from werkzeug.security import generate_password_hash
 
-from src.models.account import Account
-from src.models.user import UserCreate, UserList, UserUpdate
+from models.account import Account
+from models.user import UserCreate, UserList, UserUpdate
 
-from .models import User
+from db.postgres.models import User
 
 
 class UserRepository:

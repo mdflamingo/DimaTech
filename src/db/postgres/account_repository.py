@@ -1,9 +1,9 @@
 from sqlalchemy import and_, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.models.paymant import Paymant
+from models.paymant import Paymant
 
-from .models import Account, User
+from db.postgres.models import Account, User
 
 
 class AccountRepository:

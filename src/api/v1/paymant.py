@@ -2,9 +2,9 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from loguru import logger
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.db.postgres.connection import get_session
-from src.models.paymant import Paymant
-from src.services.paymant_service import PaymentService, get_payment_service
+from db.postgres.connection import get_session
+from models.paymant import Paymant
+from services.paymant_service import PaymentService, get_payment_service
 
 router = APIRouter()
 

@@ -4,7 +4,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BASE_DIR = (
     Path(__file__).resolve().parent.parent.parent
-)  # поднимаемся на 3 уровня вверх
+)
 
 
 class Settings(BaseSettings):

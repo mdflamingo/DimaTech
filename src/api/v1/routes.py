@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
-from src.api.v1.user import router as user_router
-from src.api.v1.admin import router as admin_router
-from src.api.v1.paymant import router as paymant_router
+from api.v1.user import router as user_router
+from api.v1.admin import router as admin_router
+from api.v1.paymant import router as paymant_router
 
 router = APIRouter(prefix="/api/v1")
 

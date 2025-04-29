@@ -30,6 +30,7 @@ class UserRepository:
             )
             session.add(new_user)
             await session.commit()
+            print(new_user)
         except Exception as exc:
             await session.rollback()
             raise exc

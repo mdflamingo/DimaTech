@@ -18,6 +18,8 @@ class AmountRepository:
 
     async def get_amounts(self, email: str, session: AsyncSession):
         user = await self.user_repository.get_by_email(email=email, session=session)
+        if not user:
+            raise ValueError("User not found")
         try:
             query = (
                 select(self.db_model)

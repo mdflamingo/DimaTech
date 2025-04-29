@@ -34,7 +34,6 @@ class PaymentService:
         return expected_signature
 
     async def payment_process(self, payment: Paymant, session: AsyncSession):
-
         if payment.signature != self._generate_hmac_signature(payment.model_dump()):
             raise ValueError("Invalid signature")
         try:
